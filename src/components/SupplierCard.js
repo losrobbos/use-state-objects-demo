@@ -13,14 +13,24 @@ const SupplierCard = ({ supplier, suppliers, setSuppliers }) => {
   // }, [supplierEdit])
 
   // delete existing supplier
-  const deleteSupplier = () => {
+  const deleteSupplier = async () => {
     console.log('We wanna delete ID: ', supplier._id);
 
-    // delete item by filtering it out!
-    const suppliersKeep = suppliers.filter((sup) => sup._id !== supplier._id);
-
-    // overwrite list of suppliers with those we wanna keep / without deleted
-    setSuppliers(suppliersKeep);
+    // zuerst supplier in API updated und DANACH im React State?
+    // zuerst React state updatend und DANACH API ?
+    try {
+      await fetch(`http://localhost:5000/suppliers/${supplier._id}`, { method: "DELETE" })
+  
+      // delete item by filtering it out!
+      const suppliersKeep = suppliers.filter((sup) => sup._id !== supplier._id);
+  
+      // overwrite list of suppliers with those we wanna keep / without deleted
+      setSuppliers(suppliersKeep);
+    }
+    // if delete failed => we will get here
+    catch(error) {
+      console.log( error )
+    }
   };
 
   // update existing supplier
