@@ -30,11 +30,6 @@ function App() {
     setSupplierNew( supplierDefault ) // clear supplier add form
   }
 
-  // update existing supplier
-  const updateSupplier = () => {
-
-  }
-
 
   // RENDER LIST of suppliers
   const jsxSuppliers = suppliers.map((supplier) => (
