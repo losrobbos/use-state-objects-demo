@@ -62,7 +62,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>UseState mit Objects</h2>
+        <h2>Suppliers</h2>
         { jsxSuppliers }
         <div>
           {/* ADD new supplier form */}
