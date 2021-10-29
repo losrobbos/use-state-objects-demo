@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import SupplierCard from './components/SupplierCard';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
 
   const [suppliers, setSuppliers] = useState([
     { _id: "s1", company: "Supply Unlimited GmbH", contact: "Humberto", phone: "+4912345" },
-    { _id: "s2", company: "Supply you as we can ltd", contact: "Rob", phone: "+496789"  },
+    { _id: "s2", company: "Supply you as we can ltd", contact: "Rob", phone: "+496789"  }
   ])
 
   // add new suppliers
@@ -22,11 +23,11 @@ function App() {
     console.log( "New supplier to add:", supplierNew )
 
     // create copy of OLD entries and merge with NEW entry
-    const suppliersNew = [...suppliers, supplierNew] 
+    const suppliersNew = [...suppliers, { ...supplierNew, _id: Date.now().toString() }] 
 
     // update supplier list and trigger re-render
     setSuppliers( suppliersNew )
-    setSupplierNew( { ...supplierDefault }) // clear supplier add form
+    setSupplierNew( supplierDefault ) // clear supplier add form
   }
 
   // update existing supplier
@@ -34,20 +35,15 @@ function App() {
 
   }
 
-  // delete existing supplier
-  const deleteSupploer = () => {
 
-  }
-
+  // RENDER LIST of suppliers
   const jsxSuppliers = suppliers.map((supplier) => (
-    <div key={ supplier._id }>
-      <form>
-        <div>
-          <label>Company: </label><input type="text" name="company" value={ supplier.company } />
-          <label>Contact: </label><input type="text" name="contact" value={ supplier.contact } />
-        </div>
-      </form>
-    </div>
+    <SupplierCard 
+      suppliers={ suppliers }
+      supplier={supplier} 
+      setSuppliers={ setSuppliers }
+      key={ supplier._id } 
+    />
   ))
 
   return (
@@ -55,17 +51,28 @@ function App() {
       <header className="App-header">
         <h2>UseState mit Objects</h2>
         { jsxSuppliers }
-        <div style={{ padding: '10px' }}>
+        <div>
           {/* ADD new supplier form */}
-          <form onSubmit={ addSupplier } >
+          <form className="frmAdd" onSubmit={ addSupplier } >
             <label>New Supplier: </label>
-            <input type="text" placeholder="Company..." 
-              onChange={ (e) => setSupplierNew({ ...supplierNew, company: e.target.value }) } value={ supplierNew.company } />
-            <input type="text" placeholder="Contact..."  
-              onChange={ (e) => setSupplierNew({ ...supplierNew, contact: e.target.value }) } value={ supplierNew.contact} />
-            <input type="text" placeholder="Phone..." 
-              onChange={ (e) => setSupplierNew({ ...supplierNew, phone: e.target.value }) } value={ supplierNew.phone} />
-            <button type="submit">Add</button>
+            <div>
+              <input type="text" placeholder="Company..." 
+                onChange={ (e) => setSupplierNew({ ...supplierNew, company: e.target.value }) } 
+                value={ supplierNew.company } />
+            </div>
+            <div>
+              <input type="text" placeholder="Contact..."  
+                onChange={ (e) => setSupplierNew({ ...supplierNew, contact: e.target.value }) } 
+                value={ supplierNew.contact} />
+            </div>
+            <div>
+              <input type="text" placeholder="Phone..." 
+                onChange={ (e) => setSupplierNew({ ...supplierNew, phone: e.target.value }) } 
+                value={ supplierNew.phone} />
+            </div>
+            <div>
+              <button type="submit">Add</button>
+            </div>
           </form>
         </div>
       </header>
