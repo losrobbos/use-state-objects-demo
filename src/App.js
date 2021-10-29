@@ -12,18 +12,24 @@ function App() {
 
   const [supplierNew, setSupplierNew] = useState( supplierDefault )
 
+  // default dummy suppliers
   const [suppliers, setSuppliers] = useState([
-    // { _id: "s1", company: "Supply Unlimited GmbH", contact: "Humberto", phone: "+4912345" },
-    // { _id: "s2", company: "Supply you as we can ltd", contact: "Rob", phone: "+496789"  }
+    { _id: "s1", company: "Supply Unlimited GmbH", contact: "Humberto", phone: "+4912345" },
+    { _id: "s2", company: "Supply you as we can ltd", contact: "Rob", phone: "+496789"  }
   ])
 
   // load initial suppliers data from API
   useEffect(() => {
 
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/suppliers")
-      const suppliersApi = await res.json() // parse JSON data from response into JS object
-      setSuppliers( suppliersApi ) // store suppliers from API in our local state
+      try {
+        const res = await fetch("http://localhost:5000/suppliers")
+        const suppliersApi = await res.json() // parse JSON data from response into JS object
+        setSuppliers( suppliersApi ) // store suppliers from API in our local state
+      }
+      catch(err) {
+        console.log( err )
+      }
     }
     fetchData()
 
