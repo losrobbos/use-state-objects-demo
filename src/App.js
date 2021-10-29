@@ -1,22 +1,29 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+
+  const [suppliers, setSuppliers] = useState([
+    { _id: "s1", company: "Supply Unlimited GmbH", contact: "Humberto", phone: "+4912345"  },
+    { _id: "s2", company: "Supply you as we can ltd", contact: "Rob", phone: "+496789"  },
+  ])
+
+  const jsxSuppliers = suppliers.map((supplier) => (
+    <div key={ supplier._id }>
+      <form>
+        <div>
+          <label>Company: </label><input type="text" name="company" value={ supplier.company } />
+          <label>Contact: </label><input type="text" name="contact" value={ supplier.contact } />
+        </div>
+      </form>
+    </div>
+  ))
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h2>UseState mit Objects</h2>
+        { jsxSuppliers }
       </header>
     </div>
   );
