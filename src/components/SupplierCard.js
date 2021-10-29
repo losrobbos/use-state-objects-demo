@@ -33,16 +33,16 @@ const SupplierCard = ({ supplier, suppliers, setSuppliers }) => {
 
     // UPDATE METHOD 1)
     // findElement 
-    // upate element
+    // update element
     // splice old thing with new thing
 
     // UPDATE METHOD 2)
     // filter() => old item weg
-    // updated => push()
-    // overwrite
+    // push() => updated item on top 
+    // overwrite array
 
     // UPDATE METHOD 3)
-    // map()
+    // map() => find item by ID and overwrite
 
     // loop over all items, return all items, but with some item modified...
     const suppliersUpdated = suppliers.map(supplier =>  {
