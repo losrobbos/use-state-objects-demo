@@ -12,7 +12,7 @@ function App() {
   const [supplierNew, setSupplierNew] = useState( supplierDefault )
 
   const [suppliers, setSuppliers] = useState([
-    { _id: "s1", company: "Supply Unlimited GmbH", contact: "Humberto", phone: "+4912345"  },
+    { _id: "s1", company: "Supply Unlimited GmbH", contact: "Humberto", phone: "+4912345" },
     { _id: "s2", company: "Supply you as we can ltd", contact: "Rob", phone: "+496789"  },
   ])
 
@@ -23,8 +23,10 @@ function App() {
 
     // create copy of OLD entries and merge with NEW entry
     const suppliersNew = [...suppliers, supplierNew] 
+
+    // update supplier list and trigger re-render
     setSuppliers( suppliersNew )
-    setSupplierNew({...supplierDefault})
+    setSupplierNew( { ...supplierDefault }) // clear supplier add form
   }
 
   // update existing supplier
