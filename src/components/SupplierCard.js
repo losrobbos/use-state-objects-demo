@@ -34,29 +34,25 @@ const SupplierCard = ({ supplier, suppliers, setSuppliers }) => {
   };
 
   // update existing supplier
-  const updateSupplier = () => {
+  const updateSupplier = async () => {
     console.log( "Updating supplier...", supplierEdit )
 
-    // take supplierEdit object => find entry in supplier list => and replace / update values
-    // suppliers => []
-    // supplierEdit => {}
-
-    // UPDATE METHOD 1)
-    // findElement 
-    // update element
-    // splice old thing with new thing
-
-    // UPDATE METHOD 2)
-    // filter() => old item weg
-    // push() => updated item on top 
-    // overwrite array
-
-    // UPDATE METHOD 3)
     // map() => find item by ID and overwrite
+    const updateUrl = `http://localhost:5000/suppliers/${supplierEdit._id}`
+
+    console.log( { updateUrl } )
+
+    const res = await fetch(updateUrl, {
+      method: "PATCH",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify( supplierEdit )
+    })
+
+    const supplierUpdatedApi = await res.json()
 
     // loop over all items, return all items, but with some item modified...
     const suppliersUpdated = suppliers.map(supplier =>  {
-      return supplier._id !== supplierEdit._id ? supplier : {...supplierEdit} 
+      return supplier._id === supplierEdit._id ? supplierUpdatedApi : supplier
     })
 
     setSuppliers( suppliersUpdated )

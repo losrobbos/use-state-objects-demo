@@ -36,16 +36,30 @@ function App() {
   }, [])
 
   // add new suppliers
-  const addSupplier = (e) => {
+  const addSupplier = async (e) => {
     e.preventDefault() // prevent that page is reloaded
     console.log( "New supplier to add:", supplierNew )
 
+    // 1. add new supplier to API first!
+    const res = await fetch("http://localhost:5000/suppliers", {
+      method: "POST",
+      headers: { 'Content-Type': "application/json" }, // POST / PUT / PATCH
+      body: JSON.stringify( supplierNew ) // POST / PUT / PATCH
+    })
+    const supplierNewApi = await res.json()
+
+    console.log( { supplierNewApi } )
+
+    // 2. store returned item in local state
+
     // create copy of OLD entries and merge with NEW entry
-    const suppliersNew = [...suppliers, { ...supplierNew, _id: Date.now().toString() }] 
+    const suppliersNew = [...suppliers, supplierNewApi ] 
 
     // update supplier list and trigger re-render
     setSuppliers( suppliersNew )
-    setSupplierNew( supplierDefault ) // clear supplier add form
+
+    // CLEAR supplier add form
+    setSupplierNew( supplierDefault ) 
   }
 
 
